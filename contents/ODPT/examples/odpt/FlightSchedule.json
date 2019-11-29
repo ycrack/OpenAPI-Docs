@@ -1,0 +1,25 @@
+[
+  {
+    "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:ucode:_00001C000000000000010000030FD7E5",
+    "@type": "odpt:FlightSchedule",
+    "dc:date": "2017-10-31T23:06:38+09:00",
+    "owl:sameAs": "odpt.FlightSchedule:HND-TIAT.HND.IWJ.Wednesday",
+    "odpt:operator": "odpt.Operator:HND-TIAT",
+    "odpt:calendar": "odpt.Calendar:Wednesday",
+    "odpt:originAirport": "odpt.Airport:HND",
+    "odpt:destinationAirport": "odpt.Airport:IWJ",
+    "odpt:flightScheduleObject": [
+      {
+        "odpt:airline": "odpt.Operator:ANA",
+        "odpt:flightNumber": [
+          "NH575"
+        ],
+        "odpt:originTime": "10:35",
+        "odpt:destinationTime": "12:15",
+        "odpt:isValidFrom": "2017-10-01T00:00:00+09:00",
+        "odpt:isValidTo": "2017-10-31T23:59:59+09:00"
+      }
+    ]
+  }
+]

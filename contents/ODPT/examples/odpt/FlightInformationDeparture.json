@@ -1,0 +1,26 @@
+[
+  {
+    "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:uuid:f476346b-ae6d-4102-99d8-2bf80d7c4dd8",
+    "@type": "odpt:FlightInformationDeparture",
+    "dc:date": "2017-12-06T23:20:02+09:00",
+    "owl:sameAs": "odpt.FlightInformationDeparture:NAA.NRT.9W4807",
+    "odpt:operator": "odpt.Operator:NAA",
+    "odpt:airline": "odpt.Operator:JAI",
+    "odpt:flightNumber": [
+      "9W4807"
+    ],
+    "odpt:flightStatus": "odpt.FlightStatus:Takeoff",
+    "odpt:scheduledDepartureTime": "08:30",
+    "odpt:actualDepartureTime": "08:32",
+    "odpt:departureAirport": "odpt.Airport:NRT",
+    "odpt:departureAirportTerminal": "odpt.AirportTerminal:NRT.Terminal2",
+    "odpt:departureGate": "85",
+    "odpt:checkInCounter": [
+      "B",
+      "C"
+    ],
+    "odpt:destinationAirport": "odpt.Airport:HKG",
+    "odpt:aircraftType": "788"
+  }
+]

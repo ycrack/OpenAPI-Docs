@@ -1,0 +1,21 @@
+[
+  {
+    "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:uuid:5d7dd592-ef17-4b69-b955-5b4fe5f7e350",
+    "@type": "odpt:Train",
+    "dc:date": "2017-12-07T01:24:33+09:00",
+    "owl:sameAs": "odpt.Train:JR-East.Utsunomiya.565M",
+    "odpt:operator": "odpt.Operator:JR-East",
+    "odpt:railway": "odpt.Railway:JR-East.Utsunomiya",
+    "odpt:railDirection": "odpt.RailwayDirection:Outbound",
+    "odpt:trainNumber": "565M",
+    "odpt:fromStation": "odpt.Station:JR-East.Utsunomiya.Suzumenomiya",
+    "odpt:toStation": "odpt.Station:JR-East.Utsunomiya.Utsunomiya",
+    "odpt:destinationStation": [
+      "odpt.Station:JR-East.Utsunomiya.Utsunomiya"
+    ],
+    "odpt:index": 1,
+    "odpt:delay": 0,
+    "odpt:carComposition": 15
+  }
+]

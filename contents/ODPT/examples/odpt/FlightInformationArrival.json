@@ -1,0 +1,23 @@
+[
+  {
+    "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:uuid:ff91feee-2d2c-4365-902e-26375fdf9d8b",
+    "@type": "odpt:FlightInformationArrival",
+    "dc:date": "2017-12-06T23:15:01+09:00",
+    "owl:sameAs": "odpt.FlightInformationArrival:NAA.NRT.NH832",
+    "odpt:operator": "odpt.Operator:NAA",
+    "odpt:airline": "odpt.Operator:ANA",
+    "odpt:flightNumber": [
+      "NH832"
+    ],
+    "odpt:flightStatus": "odpt.FlightStatus:Arrived",
+    "odpt:scheduledArrivalTime": "06:45",
+    "odpt:actualArrivalTime": "06:48",
+    "odpt:arrivalAirport": "odpt.Airport:NRT",
+    "odpt:arrivalAirportTerminal": "odpt.AirportTerminal:NRT.Terminal1",
+    "odpt:arrivalGate": "27",
+    "odpt:baggageClaim": "27",
+    "odpt:originAirport": "odpt.Airport:SGN",
+    "odpt:aircraftType": "788"
+  }
+]

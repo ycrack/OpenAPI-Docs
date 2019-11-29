@@ -1,0 +1,15 @@
+[
+  {
+    "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:ucode:_00001C000000000000010000030FD7E5",
+    "@type": "odpt:AirportTerminal",
+    "dc:date": "2017-01-13T15:10:00+09:00",
+    "owl:sameAs": "odpt.AirportTerminal:HND.DomesticTerminal1",
+    "dc:title": "国内線第１ターミナル",
+    "odpt:airportTerminalTitle": {
+      "ja": "国内線第１ターミナル",
+      "en": "Domestic Terminal 1"
+    },
+    "odpt.airport": "odpt.Airport:HND"
+  }
+]

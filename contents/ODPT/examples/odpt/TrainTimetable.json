@@ -1,0 +1,36 @@
+[
+  {
+    "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:ucode:_00001C000000000000010000030FD7E5",
+    "@type": "odpt:TrainTimetable",
+    "dc:date": "2017-01-13T15:10:00+09:00",
+    "dct:issued": "2017-01-01",
+    "owl:sameAs": "odpt.TrainTimetable:JR-East.ChuoRapid.123M.Weekday",
+    "odpt:operator": "odpt.Operator:JR-East",
+    "odpt:railway": "odpt.Railway:JR-East.ChuoRapid",
+    "odpt:railDirection": "odpt.RailDirection:Outbound",
+    "odpt:calendar": "odpt.Calendar:Weekday",
+    "odpt:trainNumber": "123M",
+    "odpt:trainType": "odpt.TrainType:JR-East.Rapid",
+    "odpt:originStation": [
+      "odpt.Station:JR-East.ChuoRapid.Tokyo"
+    ],
+    "odpt:destinationStation": [
+      "odpt.Station:JR-East.ChuoRapid.Takao"
+    ],
+    "odpt:trainTimetableObject": [
+      {
+        "odpt:departureTime": "06:00",
+        "odpt:departureStation": "odpt.Station:JR-East.ChuoRapid.Tokyo"
+      },
+      {
+        "odpt:departureTime": "06:30",
+        "odpt:departureStation": "odpt.Station:JR-East.ChuoRapid.Tachikawa"
+      },
+      {
+        "odpt:arrivalTime": "07:00",
+        "odpt:arrivalStation": "odpt.Station:JR-East.ChuoRapid.Takao"
+      }
+    ]
+  }
+]

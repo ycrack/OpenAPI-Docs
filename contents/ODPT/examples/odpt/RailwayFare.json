@@ -1,0 +1,16 @@
+[
+  {
+    "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:ucode:_00001C000000000000010000030FD7E5",
+    "@type": "odpt:RailwayFare",
+    "dc:date": "2017-01-13T15:10:00+09:00",
+    "owl:sameAs": "odpt.RailwayFare:TokyoMetro.Marunouchi.Tokyo.TokyoMetro.Tozai.Nakano",
+    "odpt:operator": "odpt.Operator:TokyoMetro",
+    "odpt:fromStation": "odpt.Station:TokyoMetro.Marunouchi.Tokyo",
+    "odpt:toStation": "odpt.Station:TokyoMetro.Tozai.Nakano",
+    "odpt:ticketFare": 240,
+    "odpt:icCardFare": 237,
+    "odpt:childTicketFare": 120,
+    "odpt:childIcCardFare": 118
+  }
+]

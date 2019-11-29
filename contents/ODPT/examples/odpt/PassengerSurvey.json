@@ -1,0 +1,29 @@
+[
+  {
+    "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    "@id": "urn:ucode:_00001C000000000000010000030FD7E5",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2017-01-13T06:10:00+0000",
+    "owl:sameAs": "odpt.PassengerSurvey:JR-East.Tokyo",
+    "odpt:operator": "odpt.Operator:JR-East",
+    "odpt:railway": [
+      "odpt.Railway:JR-East.Yamanote",
+      "odpt.Railway:JR-East.ChuoRapid"
+    ],
+    "odpt:station": [
+      "odpt.Station:JR-East.Yamanote.Tokyo",
+      "odpt.Station:JR-East.ChuoRapid.Tokyo"
+    ],
+    "odpt:includeAlighting": false,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2016,
+        "odpt:passengerJourneys": 12340
+      },
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 12345
+      }
+    ]
+  }
+]

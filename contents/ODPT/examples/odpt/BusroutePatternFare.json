@@ -1,0 +1,19 @@
+[
+  {
+    "@context": "http://vocab.odpt.org/context_odpt_BusroutePatternFare.jsonld",
+    "@type": "odpt:BusroutePatternFare",
+    "owl:sameAs": "odpt.BusroutePatternFare:Toei.Ou57.40301.1.1.Akabaneekihigashiguchi.Toei.Ou57.40301.1.2.Akabanenichoume",
+    "dc:date": "2017-11-14T17:45:31+09:00",
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:fromBusroutePattern": "odpt.BusroutePattern:Toei.Ou57.40301.1",
+    "odpt:fromBusstopPoleOrder": 1,
+    "odpt:fromBusstopPole": "odpt.BusstopPole:Toei.Akabaneekihigashiguchi.21.1",
+    "odpt:toBusroutePattern": "odpt.BusroutePattern:Toei.Ou57.40301.1",
+    "odpt:toBusstopPoleOrder": 2,
+    "odpt:toBusstopPole": "odpt.BusstopPole:Toei.Akabanenichoume.23.1",
+    "odpt:ticketFare": 210,
+    "odpt:childTicketFare": 110,
+    "odpt:icCardFare": 206,
+    "odpt:childIcCardFare": 103
+  }
+]
