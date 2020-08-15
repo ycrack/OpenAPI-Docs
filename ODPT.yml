@@ -1,0 +1,2865 @@
+openapi: 3.0.3
+info:
+  title: 公共交通オープンデータセンター API仕様
+  description: ODPTのAPI仕様書を第三者がOpenAPI形式で書き直したもの。
+  termsOfService: https://developer.odpt.org/terms/center_use_rules.html
+  version: '4.8'
+servers:
+  - url: https://api.odpt.org/api/v4
+  - url: https://api-tokyochallenge.odpt.org/api/v4
+paths: 
+  /odpt:Calendar:
+    get:
+      tags: [Common]
+      summary: 曜日・日付区分
+      description: 曜日・日付区分(odpt:Calendar)の内容を取得する。
+      parameters: 
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_Calendar'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:Operator:
+    get:
+      tags: [Common]
+      summary: 事業者
+      description: 公共交通機関の事業者(odpt:Operator)の内容を取得する。
+      parameters: 
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_Operator'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:Station:
+    get:
+      tags: [Train]
+      summary: 駅情報
+      description: 駅情報を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - name: 'dc:title'
+          in: query
+          description: 駅名（e.g. 東京、新宿、上野）
+          schema:
+            type: string
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_railway'
+        - $ref: '#/components/parameters/odpt_stationCode'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_Station'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:StationTimetable:
+    get:
+      tags: [Train]
+      summary: 駅時刻表
+      description: 駅時刻表を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_station'
+        - $ref: '#/components/parameters/odpt_railway'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_StationTimetable'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:Train:
+    get:
+      tags: [Train]
+      summary: 列車情報
+      description: 列車情報(列車の位置情報)を取得する。
+      parameters: 
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_railway'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_Train'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:TrainTimetable:
+    get:
+      tags: [Train]
+      summary: 列車時刻表
+      description: 列車時刻表を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_trainNumber'
+        - $ref: '#/components/parameters/odpt_railway'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_trainType'
+        - $ref: '#/components/parameters/odpt_train'
+        - $ref: '#/components/parameters/odpt_calendar'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_TrainTimetable'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:TrainInformation:
+    get:
+      tags: [Train]
+      summary: 運行情報
+      description: 列車運行情報を取得する。
+      parameters:
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_railway'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_TrainInformation'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:TrainType:
+    get:
+      tags: [Train]
+      summary: 列車種別
+      description: 列車種別の定義を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_TrainType'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:RailDirection:
+    get:
+      tags: [Train]
+      summary: 進行方向
+      description: 進行方向の定義を取得する。
+      parameters: 
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_RailDirection'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:Railway:
+    get:
+      tags: [Train]
+      summary: 路線情報
+      description: 路線情報を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - name: 'dc:title'
+          in: query
+          description: 路線名（e.g. 小田原線、京王線、相模原線）
+          schema:
+            type: string
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_lineCode'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_Railway'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:RailwayFare:
+    get:
+      tags: [Train]
+      summary: 運賃情報
+      description: 2駅間の運賃を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_fromStation'
+        - $ref: '#/components/parameters/odpt_toStation'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_RailwayFare'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:PassengerSurvey:
+    get:
+      tags: [Train]
+      summary: 駅別乗降人員
+      description: 駅の乗降人員数を取得する。
+      parameters: 
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_station'
+        - $ref: '#/components/parameters/odpt_railway'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_PassengerSurvey'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:Bus:
+    get:
+      tags: [Bus]
+      summary: バス情報
+      description: バス車両の運行情報(odpt:Bus)を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_busroutePattern'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_fromBusstopPole'
+        - $ref: '#/components/parameters/odpt_toBusstopPole'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_Bus'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:BusTimetable:
+    get:
+      tags: [Bus]
+      summary: バス時刻表
+      description: バス時刻表(odpt:BusTimetable)の取得
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_busroutePattern'
+        - name: dc:title
+          in: query
+          description: バス路線名称（系統名等)
+          schema:
+            type: string
+        - $ref: '#/components/parameters/odpt_calendar'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_BusTimetable'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可                  
+  /odpt:BusroutePattern:
+    get:
+      tags: [Bus]
+      summary: バス運行路線情報
+      description: 運行系統情報(odpt:BusroutePattern)の取得
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - name: dc:title
+          in: query
+          description: 路線・系統名称
+          schema:
+            type: string
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_busroute'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_BusroutePattern'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:BusroutePatternFare:
+    get:
+      tags: [Bus]
+      summary: バス運賃情報
+      description: 運賃情報(odpt:BusroutePatternFare)の取得
+      parameters: 
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - name: odpt:fromBusstopPole
+          in: query
+          description: 乗車バス停(標柱)のID (odpt:BusstopPoleのowl:sameAs)
+          schema: 
+            type: string
+        - name: odpt:toBusstopPole
+          in: query
+          description: 降車バス停(標柱)のID (odpt:BusstopPoleのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:ticketFare
+          in: query
+          description: 切符利用時の運賃
+          schema:
+            type: integer
+        - name: odpt:childTicketFare
+          in: query
+          description: 切符利用時の子供運賃
+          schema:
+            type: integer
+        - name: odpt:icCardFare
+          in: query
+          description: ICカード利用時の運賃
+          schema:
+            type: integer
+        - name: odpt:childIcCardFare
+          in: query
+          description: ICカード利用時の子供運賃
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_BusroutePatternFare'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:BusstopPole:
+    get:
+      tags: [Bus]
+      summary: バス停標柱情報
+      description: バス停(標柱)(odpt:BusstopPole)の取得
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - name: dc:title
+          in: query
+          description: 停留所名称
+          schema:
+            type: string
+        - name: odpt:busstopPoleNumber
+          in: query
+          description: 標柱番号
+          schema:
+            type: string
+        - name: odpt:busroutePattern
+          in: query
+          description: 標柱で発着する系統のID(odpt:BusroutePatternのowl:sameAs)
+          schema:
+            type: string
+        - $ref: '#/components/parameters/odpt_operator'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_BusstopPole'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:BusstopPoleTimetable:
+    get:
+      tags: [Bus]
+      summary: バス停標柱時刻表
+      description: バス停(標柱)時刻表(odpt:BusstopPoleTimetable)の取得
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - name: odpt:busstopPole
+          in: query
+          description: 時刻表の対応するバス停(標柱)のID(odpt:BusstopPoleのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:busDirection
+          in: query
+          description: 方面のID
+          schema:
+            type: string
+        - $ref: '#/components/parameters/odpt_busroute'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_calendar'
+        - name: dc:date
+          in: query
+          description: データ生成日付
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_BusstopPoleTimetable'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:Airport:
+    get:
+      tags: [Airplane]
+      summary: 空港情報
+      description: 空港の情報を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+      responses:
+        200: 
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_Airport'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:AirportTerminal:
+    get:
+      tags: [Airplane]
+      summary: 空港ターミナル情報
+      description: 空港のターミナルの情報を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - name: odpt:airport
+          in: query
+          description: 空港を示すID(odpt:Airportのowl:sameAs)
+          schema:
+            type: string
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_AirportTerminal'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可        
+  /odpt:FlightInformationArrival:
+    get:
+      tags: [Airplane]
+      summary: フライト到着情報
+      description: フライト到着情報(空港に当日到着する航空機のリアルタイムな情報)を取得する。
+      parameters:
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - name: odpt:airline
+          in: query
+          description: 空港事業者または航空事業者を示すID(odpt:Operatorのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:flightStatus
+          in: query
+          description: フライト状況を示すID(odpt:FlightStatusのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:arrivalAirport
+          in: query
+          description: 到着空港を示すID(odpt:Airportのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:arrivalAirportTerminal
+          in: query
+          description: 到着空港ターミナルを示すID(odpt:AirportTerminalのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:arrivalGate
+          in: query
+          description: 到着空港ゲート番号
+          schema:
+            type: string
+        - name: odpt:originAirport
+          in: query
+          description: 出発地の空港を示すID(odpt:Airportのowl:sameAs)
+          schema:
+            type: string
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_FlightInformationArrival'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可    
+  /odpt:FlightInformationDeparture:
+    get:
+      tags: [Airplane]
+      summary: フライト出発情報
+      description: フライト出発情報(空港を当日出発する航空機のリアルタイムな情報)を取得する。
+      parameters:
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - name: odpt:airline
+          in: query
+          description: 空港事業者または航空事業者を示すID(odpt:Operatorのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:flightStatus
+          in: query
+          description: フライト状況を示すID(odpt:FlightStatusのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:departureAirport
+          in: query
+          description: 出発空港を示すID(odpt:Airportのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:departureAirportTerminal
+          in: query
+          description: 出発空港ターミナルを示すID(odpt:AirportTerminalのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:departureGate
+          in: query
+          description: 出発空港ゲート番号
+          schema:
+            type: string
+        - name: odpt:destinationAirport
+          in: query
+          description: 目的地の空港を示すID(odpt:Airportのowl:sameAs)
+          schema:
+            type: string
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_FlightInformationDeparture'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可          
+  /odpt:FlightSchedule:
+    get:
+      tags: [Airplane]
+      summary: フライト時刻表
+      description: フライト時刻表(空港を発着する航空機の予定時刻表)を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+        - $ref: '#/components/parameters/odpt_operator'
+        - $ref: '#/components/parameters/odpt_calendar'
+        - name: odpt:originAirport
+          in: query
+          description: 出発地の空港を示すID(odpt:Airportのowl:sameAs)
+          schema:
+            type: string
+        - name: odpt:destinationAirport
+          in: query
+          description: 目的地の空港を示すID(odpt:Airportのowl:sameAs)
+          schema:
+            type: string     
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_FlightSchedule'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+  /odpt:FlightStatus:
+    get:
+      tags: [Airplane]
+      summary: フライト状況
+      description: フライト状況の定義を取得する。
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/owl_sameAs'
+      responses:
+        200:
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/odpt_FlightStatus'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        403:
+          description: 権限なし
+        404:
+          description: 該当データなし
+        500:
+          description: サーバー内部エラー
+        503:
+          description: サービス利用不可
+
+  /docomo-cycle/parklist:
+    get:
+      tags: [ShareCycle]
+      summary: ポート情報
+      description: ポート情報を取得する
+      parameters:
+        - name: lat
+          in: query
+          description: 緯度
+          schema:
+            type: number
+            format: double
+        - name: lon
+          in: query
+          description: 経度
+          schema:
+            type: number
+            format: double
+        - name: radius
+          in: query
+          description: 検索範囲(メートル)
+          schema:
+            type: integer
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/park_info'
+        400:
+          description: パラメータ不正
+        401:
+          description: acl:consumerKeyが誤っている
+        500:
+          description: サーバー内部エラー
+ 
+tags: 
+  - name: Common
+  - name: Train
+  - name: Bus
+  - name: Airplane
+  - name: ShareCycle
+
+components:
+  securitySchemes:
+    aclConsumerKey:
+      type: apiKey
+      in: query
+      name: acl:consumerKey
+  parameters:
+    id:
+      name: '@id'
+      in: query
+      description: データに付与された固有識別子
+      schema:
+        type: string
+    owl_sameAs:
+      name: owl:sameAs
+      in: query
+      description: データに付与された固有識別子の別名
+      schema:
+        type: string
+    odpt_operator:
+      name: odpt:operator
+      in: query
+      description: 事業者を表すID (odpt:Operatorのowl:sameAs)
+      schema:
+        type: string
+    odpt_station:
+      name: odpt:station
+      in: query
+      description: 駅を表すID (odpt:Stationのowl:sameAs)
+      schema:
+        type: string
+    odpt_stationCode:
+      name: odpt:stationCode
+      in: query
+      description: 駅ナンバリング（e.g. OH01=小田急新宿駅）
+      schema:
+        type: string
+    odpt_railway:
+      name: odpt:railway
+      in: query
+      description: 路線を表すID (odpt:Railwayのowl:sameAs)
+      schema:
+        type: string
+    odpt_lineCode:
+      name: odpt:lineCode
+      in: query
+      description: 路線コード、路線シンボル表記（e.g. 小田原線 => OH、丸ノ内線 => M）
+      schema:
+        type: string
+    odpt_fromStation:
+      name: odpt:fromStation
+      in: query
+      description: 出発駅のID (odpt:Stationのowl:sameAs)
+      schema:
+        type: string
+    odpt_toStation:
+      name: odpt:toStation
+      in: query
+      description: 到着駅のID (odpt:Stationのowl:sameAs)
+      schema:
+        type: string
+    odpt_railDirection:
+      name: odpt:railDirection
+      in: query
+      description: 進行方向を表すID（odpt:RailDirectionのowl:sameAs）
+      schema:
+        type: string
+    odpt_calendar:
+      name: odpt:calendar
+      in: query
+      description: 実施日を表すID（odpt:Calendarのowl:sameAs）
+      schema:
+        type: string
+    odpt_trainNumber:
+      name: odpt:trainNumber
+      in: query
+      description: 列車番号
+      schema:
+        type: string
+    odpt_trainType:
+      name: odpt:trainType
+      in: query
+      description: 列車種別ID (odpt:TrainTypeのowl:sameAs)
+      schema:
+        type: string
+    odpt_train:
+      name: odpt:train
+      in: query
+      description: 該当する列車ID (odpt:Trainのowl:sameAs)
+      schema:
+        type: string
+    odpt_busroutePattern:
+      name: odpt:busroutePattern
+      in: query
+      description: バス車両の運行系統のID (odpt:BusroutePatternのowl:sameAs)
+      schema:
+        type: string
+    odpt_fromBusstopPole:
+      name: odpt:fromBusstopPole
+      in: query
+      description: 直近に通過した、あるいは停車中のバス停のID (odpt:BusstopPoleのowl:sameAs)
+      schema:
+        type: string
+    odpt_toBusstopPole:
+      name: odpt:toBusstopPole
+      in: query
+      description: 次に到着するバス停のID (odpt:BusstopPoleのowl:sameAs)
+      schema:
+        type: string
+    odpt_busroute:
+      name: odpt:busroute
+      in: query
+      description: 路線のID
+      schema:
+        type: string
+  schemas:
+    rdf_type:
+      type: array
+      items:
+        type: string
+        enum: 
+         - odpt:Calendar
+         - odpt:Operator
+         - odpt:Station
+         - odpt:StationTimetable
+         - odpt:Train
+         - odpt:TrainTimetable
+         - odpt:TrainInformation
+         - odpt:TrainType
+         - odpt:RailDirection
+         - odpt:Railway
+         - odpt:RailwayFare
+         - odpt:PassengerSurvey
+         - odpt:Bus
+         - odpt:BusTimetable
+         - odpt:BusroutePattern
+         - odpt:BusroutePatternFare
+         - odpt:BusstopPole
+         - odpt:BusstopPoleTimetable
+         - odpt:Airport
+         - odpt:AirportTerminal
+         - odpt:FlightInformationArrival
+         - odpt:FlightInformationDeparture
+         - odpt:FlightSchedule
+         - odpt:FlightStatus
+    odpt_Calendar:
+      type: object
+      required: 
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'owl:sameAs'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:Calendar"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.Calendar:Weekday"
+        'dc:title':
+          type: string
+          example: "平日"
+        'odpt:calendarTitle':
+          type: object
+          properties:
+            ja:
+              type: string
+            en:
+              type: string
+          example: 
+            ja: "平日"
+            en: "Weekday"
+        'odpt:day':
+          type: array
+          items:
+            type: string
+          example: [ "2017-01-13", "2017-01-18" ]
+        'odpt:duration':
+          type: string
+          example: "2017-11-13/2017-11-18"
+    odpt_Operator:
+      type: object
+      required: 
+        - '@context'
+        - '@id'
+        - 'owl:sameAs'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:Operator"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.Operator:XX"
+        'dc:title':
+          type: string
+          example: "○○電鉄"
+        'odpt:operatorTitle':
+          type: object
+          properties:
+            ja:
+              type: string
+            en:
+              type: string
+          example: 
+            ja: "○○電鉄"
+            en: "XX Railway"
+    odpt_PassengerSurvey:
+      type: object
+      required: 
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'dc:date'
+        - 'owl:sameAs'
+        - 'odpt:operator'
+        - 'odpt:station'
+        - 'odpt:railway'
+        - 'odpt:includeAlighting'
+        - 'odpt:passengerSurveyObject'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:PassengerSurvey"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.PassengerSurvey:JR-East.Tokyo"
+        'odpt:operator':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'odpt:station':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:JR-East.Yamanote.Tokyo", "odpt.Station:JR-East.ChuoRapid.Tokyo" ]
+        'odpt:railway':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Railway:JR-East.Yamanote", "odpt.Railway:JR-East.ChuoRapid" ]
+        'odpt:includeAlighting':
+          type: boolean
+          example: true
+        'odpt:passengerSurveyObject':
+          type: array
+          items:
+            $ref: '#/components/schemas/odpt_PassengerSurveyObject'
+    odpt_PassengerSurveyObject:
+      type: object
+      required: 
+        - 'odpt:surveyYear'
+        - 'odpt:passengerJourneys'
+      properties:
+        'odpt:surveyYear':
+          type: integer
+          example: 2017
+        'odpt:passengerJourneys':
+          type: integer
+          example: 12345
+    odpt_RailDirection:
+      type: object
+      required: 
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'owl:sameAs'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:RailDirection"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.RailDirection:Inbound"
+        'dc:title':
+          type: string
+          example: "上り"
+        'odpt:railDirectionTitle':
+          type: object
+          properties:
+            'ja':
+              type: string
+            'en':
+              type: string
+          example: { "ja" : "上り", "en" : "Inbound" }
+    odpt_Railway:
+      type: object
+      required: 
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'dc:date'
+        - 'owl:sameAs'
+        - 'dc:title'
+        - 'odpt:operator'
+        - 'odpt:stationOrder'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:Railway"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.Railway:JR-East.Yamanote"
+        'dc:title':
+          type: string
+          example: "山手線"
+        'odpt:railwayTitle':
+          type: object
+          properties:
+            'ja':
+              type: string
+            'en':
+              type: string
+          example: { "ja" : "山手線", "en" : "Yamanote Line" }
+        'odpt:kana':
+          type: string
+          example: "ひらがな"
+        'odpt:operator':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'odpt:lineCode':
+          type: string
+          example: "M"
+        'odpt:color':
+          type: string
+        'ug:region':
+          type: object
+          #TODO: GeoJSON
+        'odpt:ascendingRailDirection':
+          type: string
+          example: "odpt.RailDirection:Outbound"
+        'odpt:descendingRailDirection':
+          type: string
+          example: "odpt.RailDirection:Inbound"
+        'odpt:stationOrder':
+          type: array
+          items:
+            $ref: '#/components/schemas/odpt_StationOrder'
+    odpt_StationOrder:
+      type: object
+      required: 
+        - 'odpt:station'
+        - 'odpt:index'
+      properties:
+        'odpt:station':
+          type: string
+          example: "odpt.Station:TokyoMetro.Marunouchi.Tokyo"
+        'odpt:stationTitle':
+          type: object
+          properties:
+            ja:
+              type: string
+            en:
+              type: string
+          example: { "ja" : "東京", "en" : "Tokyo" }
+        'odpt:index':
+          type: integer
+          example: 1
+    odpt_RailwayFare:
+      type: object
+      required: 
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'dc:date'
+        - 'owl:sameAs'
+        - 'odpt:operator'
+        - 'odpt:fromStation'
+        - 'odpt:toStation'
+        - 'odpt:ticketFare'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:RailwayFare"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'dct:issued':
+          type: string
+          example: "2017-01-13"
+        'dct:valid':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.RailwayFare:TokyoMetro.Marunouchi.Tokyo.TokyoMetro.Tozai.Nakano"
+        'odpt:operator':
+          type: string
+          example: "odpt.Operator:TokyoMetro"
+        'odpt:fromStation':
+          type: string
+          example: "odpt.Station:TokyoMetro.Marunouchi.Tokyo"
+        'odpt:toStation':
+          type: string
+          example: "odpt.Station:TokyoMetro.Tozai.Nakano"
+        'odpt:ticketFare':
+          type: integer
+          example: 200
+        'odpt:icCardFare':
+          type: integer
+          example: 196
+        'odpt:childTicketFare':
+          type: integer
+          example: 100
+        'odpt:childIcCardFare':
+          type: integer
+          example: 98
+        'odpt:viaStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:TokyoMetro.Tozai.NishiFunabashi" ]
+        'odpt:viaRailway':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Railway:TokyoMetro.Tozai" ]
+        'odpt:ticketType':
+          type: string
+        'odpt:paymentMethod':
+          type: array
+          items:
+            type: string
+    odpt_Station:
+      type: object
+      required: 
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'dc:date'
+        - 'owl:sameAs'
+        - 'odpt:operator'
+        - 'odpt:railway'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:Station"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.Station:JR-East.Yamanote.Tokyo"
+        'dc:title':
+          type: string
+          example: "東京"
+        'odpt:stationTitle':
+          type: object
+          properties:
+            ja:
+              type: string
+            en:
+              type: string
+          example: { "ja" : "東京", "en" : "Tokyo" }
+        'odpt:operator':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'odpt:railway':
+          type: string
+          example: "odpt.Railway:JR-East.Yamanote"
+        'odpt:stationCode':
+          type: string
+          example: "JY01"
+        'geo:long':
+          type: number
+          example: 139.1234
+        'geo:lat':
+          type: number
+          example: 35.1234
+        'ug:region':
+          type: object
+          #TODO: GeoJSON
+        'odpt:exit':
+          type: array
+          items:
+            type: string
+            #TODO: ug:Poi => @id
+        'odpt:connectingRailway':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Railway:JR-East.ChuoRapid", "odpt.Railway:TokyoMetro.Marunouchi" ]
+        'odpt:stationTimetable':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.StationTimeTable:JR-East.Yamanote.Tokyo.OuterLoop.Weekday" ]
+        'odpt:passengerSurvey':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.PassengerSurvey:JR-East.Tokyo" ]
+    odpt_StationTimetable:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'dc:date'
+        - 'owl:sameAs'
+        - 'odpt:operator'
+        - 'odpt:railway'
+        - 'odpt:stationTimetableObject'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:StationTimetable"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'dct:issued':
+          type: string
+          example: "2017-01-13"
+        'dct:valid':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.StationTimetable:JR-East.ChuoRapid.Tokyo.Outbound.Weekday"
+        'odpt:operator':
+          type: string
+          example: "odpt.Railway:JR-East"
+        'odpt:railway':
+          type: string
+          example: "odpt.Railway:JR-East.ChuoRapid"
+        'odpt:railwayTitle':
+          type: object
+          example: { "ja" : "中央線快速", "en" : "Chuo Rapid" }
+        'odpt:station':
+          type: string
+          example: "odpt.Station:JR-East.ChuoRapid.Tokyo"
+        'odpt:stationTitle':
+          type: object
+          example: { "ja" : "東京", "en" : "Tokyo" }
+        'odpt:railDirection':
+          type: string
+          example: "odpt.RailDirection:Outbound"
+        'odpt:calendar':
+          type: string
+          example: "odpt.Calendar:Weekday"
+        'odpt:stationTimetableObject':
+          type: array
+          items:
+            $ref: '#/components/schemas/odpt_stationTimetableObject'
+        'odpt:note':
+          type: object
+    odpt_stationTimetableObject:
+      type: object
+      properties:
+        'odpt:arrivalTime':
+          type: string
+          example: "05:08"
+        'odpt:departureTime':
+          type: string
+          example: "05:09"
+        'odpt:originStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:JR-East.ChuoRapid.Tokyo" ]
+        'odpt:destinationStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:JR-East.ChuoRapid.Takao" ]
+        'odpt:viaStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:TokyoMetro.Tozai.NishiFunabashi" ]
+        'odpt:viaRailway':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Railway:TokyoMetro.Tozai" ]
+        'odpt:train':
+          type: string
+          example: "odpt.Train:JR-East.Yamanote.123M"
+        'odpt:trainNumber':
+          type: string
+          example: "123M"
+        'odpt:trainType':
+          type: string
+          example: "odpt.TrainType:JR-East.Local"
+        'odpt:trainName':
+          type: array
+          items:
+            type: object
+            properties:
+              ja:
+                type: string
+              en: 
+                type: string
+          example: [ { "ja" : "むさし", "en" : "Musashi" } ]
+        'odpt:trainOwner':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'odpt:isLast':
+          type: boolean
+          example: true
+        'odpt:isOrigin':
+          type: boolean
+          example: true
+        'odpt:platformNumber':
+          type: string
+          example: "1"
+        'odpt:platformName':
+          type: object
+          properties:
+            ja:
+              type: string
+            en:
+              type: string
+          example: { "ja" : "日本語名称", "en" : "English Name" }
+        'odpt:carComposition':
+          type: integer
+          example: 8
+        'odpt:note':
+          type: object
+          example: { "ja" : "日本語での注釈情報", "en" : "Note in English" }
+    odpt_Train:
+      type: object
+      required: 
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'dc:date'
+        - 'owl:sameAs'
+        - 'odpt:operator'
+        - 'odpt:railway'
+        - 'odpt:trainNumber'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:Train"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'dct:valid':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.Train:JR-East.Yamanote.123M"
+        'odpt:operator':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'odpt:railway':
+          type: string
+          example: "odpt.Railway:JR-East.Yamanote"
+        'odpt:railDirection':
+          type: string
+          example: "odpt.RailDirection:Outbound"
+        'odpt:trainNumber':
+          type: string
+          example: "123M"
+        'odpt:trainType':
+          type: string
+          example: "odpt.TrainType:JR-East.Local"
+        'odpt:trainName':
+          type: array
+          items:
+            type: object
+          example: [ { "ja" : "むさし", "en" : "Musashi" } ]
+        'odpt:fromStation':
+          type: string
+          nullable: true
+          example: "odpt.Station:JR-East.ChuoRapid.Tokyo"
+        'odpt:toStation':
+          type: string
+          nullable: true
+          example: "odpt.Station:JR-East.ChuoRapid.Tokyo"
+        'odpt:originStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:JR-East.ChuoRapid.Tokyo" ]
+        'odpt:destinationStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:JR-East.ChuoRapid.Takao" ]
+        'odpt:viaStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:TokyoMetro.Tozai.NishiFunabashi" ]
+        'odpt:viaRailway':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Railway:TokyoMetro.Tozai" ]
+        'odpt:trainOwner':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'odpt:index':
+          type: integer
+          example: 1
+        'odpt:delay':
+          type: integer
+          example: 60
+        'odpt:carComposition':
+          type: integer
+          example: 8
+        'odpt:note':
+          type: object
+          example: { "ja" : "日本語での注釈情報", "en" : "Note in English" }
+    odpt_TrainInformation:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'dc:date'
+        - 'owl:sameAs'
+        - 'odpt:timeOfOrigin'
+        - 'odpt:operator'
+        - 'odpt:trainInformationText'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:TrainInformation"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'dct:valid':
+          type: string
+          example: "2017-01-13T15:15:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.TrainInformation:JR-East.Yamanote"
+        'odpt:timeOfOrigin':
+          type: string
+          example: "2017-01-13T15:15:00+09:00"
+        'odpt:operator':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'odpt:railway':
+          type: string
+          example: "odpt.Railway:JR-East.Yamanote"
+        'odpt:trainInformationStatus':
+          type: object
+          example: { "ja" : "日本語テキスト", "en" : "Text in English" }
+        'odpt:trainInformationText':
+          type: object
+          example: { "ja" : "日本語テキスト", "en" : "Text in English" }
+        'odpt:railDirection':
+          type: string
+          example: "odpt.RailDirection:Outbound"
+        'odpt:trainInformationArea':
+          type: object
+          example: { "ja" : "日本語テキスト", "en" : "Text in English" }
+        'odpt:trainInformationKind':
+          type: object
+          example: { "ja" : "日本語テキスト", "en" : "Text in English" }
+        'odpt:stationFrom':
+          type: string
+          example: "odpt.Station:JR-East.Yamanote.Tokyo"
+        'odpt:stationTo':
+          type: string
+          example: "odpt.Station:JR-East.Yamanote.Tokyo"
+        'odpt:trainInformationRange':
+          type: object
+          example: { "ja" : "日本語テキスト", "en" : "Text in English" }
+        'odpt:trainInformationCause':
+          type: object
+          example: { "ja" : "日本語テキスト", "en" : "Text in English" }
+        'odpt:transferRailways':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Railway:JR-East.Yamanote" ]
+        'odpt:resumeEstimate':
+          type: string
+          example: "2017-01-13T15:15:00+09:00"
+    odpt_TrainTimetable:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'dc:date'
+        - 'owl:sameAs'
+        - 'odpt:operator'
+        - 'odpt:railway'
+        - 'odpt:trainNumber'
+        - 'odpt:trainTimetableObject'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:TrainTimetable"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'dct:issued':
+          type: string
+          example: "2017-01-13"
+        'dct:valid':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt.TrainTimetable:JR-East.ChuoRapid.123M.Weekday"
+        'odpt:operator':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'odpt:railway':
+          type: string
+          example: "odpt.Railway:JR-East.Yamanote"
+        'odpt:railDirection':
+          type: string
+          example: "odpt.RailDirection:Outbound"
+        'odpt:calendar':
+          type: string
+          example: "odpt.Calendar:Weekday"
+        'odpt:train':
+          type: string
+          example: "odpt.Train:JR-East.Yamanote.123M"
+        'odpt:trainNumber':
+          type: string
+          example: "123M"
+        'odpt:trainType':
+          type: string
+          example: "odpt.TrainType:JR-East.Local"
+        'odpt:trainName':
+          type: array
+          items:
+            type: object
+          example: [ { "ja" : "むさし", "en" : "Musashi" } ]
+        'odpt:trainOwner':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'odpt:originStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:JR-East.ChuoRapid.Tokyo" ]
+        'odpt:destinationStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:JR-East.ChuoRapid.Takao" ]
+        'odpt:viaStation':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Station:TokyoMetro.Tozai.NishiFunabashi" ]
+        'odpt:viaRailway':
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Railway:TokyoMetro.Tozai" ]
+        'odpt:previousTrainTimetable':
+          type: array
+          items: 
+            type: string
+          example: [ "odpt.TrainTimetable:JR-East.ChuoRapid.123M.Weekday" ]
+        'odpt:nextTrainTimetable':
+          type: array
+          items: 
+            type: string
+          example: [ "odpt.TrainTimetable:JR-East.ChuoRapid.123M.Weekday" ]
+        'odpt:trainTimetableObject':
+          type: array
+          items:
+            $ref: '#/components/schemas/odpt_trainTimetableObject'
+        'odpt:needExtraFee':
+          type: boolean
+          example: true
+        'odpt:note':
+          type: object
+          example: { "ja" : "日本語テキスト", "en" : "Text in English" }
+    odpt_trainTimetableObject:
+      type: object
+      properties:
+        'odpt:arrivalTime':
+          type: string
+          example: "05:08"
+        'odpt:arrivalStation':
+          type: string
+          example: "odpt.Station:JR-East.ChuoRapid.Tokyo"
+        'odpt:departureTime':
+          type: string
+          example: "05:09"
+        'odpt:departureStation':
+          type: string
+          example: "odpt.STation:JR-East.ChuoRapid.Tokyo"
+        'odpt:platformNumber':
+          type: string
+          example: "1"
+        'odpt:platfromName':
+          type: object
+          example: { "ja" : "日本語名称", "en" : "English Name" }
+        'odpt:note':
+          type: object
+          example: { "ja" : "日本語での注釈情報", "en" : "Note in English" }
+    odpt_TrainType:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - 'owl:sameAs'
+        - 'odpt:operator'
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:TrainType"
+        'dc:date':
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        'owl:sameAs':
+          type: string
+          example: "odpt:JR-East.Local" #TODO: typo?
+        'odpt:operator':
+          type: string
+          example: "odpt.Operator:JR-East"
+        'dc:title':
+          type: string
+          example: "普通"
+        'odpt:trainTypeTitle':
+          type: object
+          example: { "ja" : "普通", "en" : "Local" }
+    odpt_Bus:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+        - odpt:busNumber
+        - dc:date
+        - dct:valid
+        - odpt:frequency
+        - odpt:busroutePattern
+        - odpt:operator
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+        '@type':
+          type: string
+          example: "odpt:Bus"
+        owl:sameAs:
+          type: string
+        odpt:busNumber:
+          type: string
+        dc:date:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dct:valid:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        odpt:frequency:
+          type: integer
+          example: 60
+        odpt:busroutePattern:
+          type: string
+        odpt:operator:
+          type: string
+        odpt:startingBusstopPole:
+          type: string
+        odpt:terminalBusstopPole:
+          type: string
+        odpt:fromBusstopPole:
+          type: string
+          nullable: true
+        odpt:fromBusstopPoleTime:
+          type: string
+          nullable: true
+          example: "2017-01-13T15:10:00+09:00"
+        odpt:toBusstopPole:
+          type: string
+          nullable: true
+        odpt:progress:
+          type: number
+          example: 0.0
+        geo:long:
+          type: number
+          example: 139.1234
+        geo:lat:
+          type: number
+          example: 35.1234
+        odpt:speed:
+          type: number
+          example: 0.0
+        odpt:azimuth:
+          type: number
+          example: 90.0
+        odpt:doorStatus:
+          type: string
+    odpt_BusTimetable:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+        - odpt:operator
+        - odpt:busroutePattern
+        - odpt:calendar
+        - odpt:busTimetableObject
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:BusTimetable"
+        owl:sameAs:
+          type: string
+        dc:date:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dct:issued:
+          type: string
+          example: "2017-01-13"
+        dct:valid:
+          type: string
+          example: "2017-01-13T15:15:00+09:00"
+        dc:title:
+          type: string
+        odpt:kana:
+          type: string
+        odpt:operator:
+          type: string
+        odpt:busroutePattern:
+          type: string
+        odpt:calendar:
+          type: string
+        odpt:busTimetableObject:
+          type: array
+          items:
+            $ref: '#/components/schemas/odpt_busTimetableObject'
+    odpt_busTimetableObject:
+      type: object
+      required:
+        - odpt:index
+        - odpt:busstopPole
+      properties:
+        odpt:index:
+          type: integer
+          example: 1
+        odpt:busstopPole:
+          type: string
+        odpt:arrivalTime:
+          type: string
+          example: "10:00"
+        odpt:departureTime:
+          type: string
+          example: "10:00"
+        odpt:destinationSign:
+          type: string
+        odpt:isNonStepBus:
+          type: boolean
+          example: true
+        odpt:isMidnight:
+          type: boolean
+          example: true
+        odpt:canGetOn:
+          type: boolean
+          example: true
+        odpt:canGetOff:
+          type: boolean
+          example: true
+        odpt:note:
+          type: string
+    odpt_BusroutePattern:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+        - dc:date
+        - dc:title
+        - odpt:operator
+        - odpt:busstopPoleOrder
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:BusroutePattern"
+        owl:sameAs:
+          type: string
+        dc:date:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dct:valid:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dc:title:
+          type: string
+        odpt:kana:
+          type: string
+        odpt:operator:
+          type: array
+          items:
+            type: string
+        odpt:busroute:
+          type: string
+        odpt:pattern:
+          type: string
+        odpt:direction:
+          type: string
+        ug:region:
+          type: object
+        odpt:busstopPoleOrder:
+          type: array
+          items:
+            $ref: '#/components/schemas/odpt_busstopPoleOrder'
+        odpt:note:
+          type: string
+        odpt:busLocationURL:
+          type: string
+    odpt_busstopPoleOrder:
+      type: object
+      required:
+        - odpt:busstopPole
+        - odpt:index
+      properties:
+        odpt:busstopPole:
+          type: string
+        odpt:index:
+          type: integer
+          example: 1
+        odpt:openingDoorsToGetOn:
+          type: array
+          items:
+            type: string
+            enum: 
+              - odpt:OpeningDoor:FrontSide
+              - odpt:OpeningDoor:RearSide
+        odpt:openingDoorsToGetOff:
+          type: array
+          items:
+            type: string
+            enum: 
+              - odpt:OpeningDoor:FrontSide
+              - odpt:OpeningDoor:RearSide
+        odpt:note:
+          type: string
+    odpt_BusroutePatternFare:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+        - dc:date
+        - odpt:operator
+        - odpt:fromBusroutePattern
+        - odpt:fromBusstopPoleOrder
+        - odpt:fromBusstopPole
+        - odpt:toBusroutePattern
+        - odpt:toBusstopPoleOrder
+        - odpt:toBusstopPole
+        - odpt:ticketFare
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:BusroutePatternFare"
+        owl:sameAs:
+          type: string
+        dc:date:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dct:issued:
+          type: string
+          example: "2017-01-13"
+        dct:valid:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        odpt:operator:
+          type: string
+        odpt:fromBusroutePattern:
+          type: string
+        odpt:fromBusstopPoleOrder:
+          type: integer
+          example: 0
+        odpt:fromBusstopPole:
+          type: string
+        odpt:toBusroutePattern:
+          type: string
+        odpt:toBusstopPoleOrder:
+          type: integer
+          example: 0
+        odpt:toBusstopPole:
+          type: string
+        odpt:ticketFare:
+          type: integer
+          example: 200
+        odpt:childTicketFare:
+          type: integer
+          example: 100
+        odpt:icCardFare:
+          type: integer
+          example: 200
+        odpt:childIcCardFare:
+          type: integer
+          example: 100
+    odpt_BusstopPole:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+        - dc:date
+        - dc:title
+        - odpt:operator
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:BusstopPole"
+        owl:sameAs:
+          type: string
+        dc:date:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dct:valid:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dc:title:
+          type: string
+          example: "豊洲駅前"
+        odpt:kana:
+          type: string
+          example: "とよすえきまえ"
+        title:
+          type: object
+          example: { "ja" : "豊洲駅前", "ja-Hrkt" : "とよすえきまえ", "en" : "Toyosu Sta." }
+        geo:long:
+          type: number
+          example: 139.1234
+        geo:lat:
+          type: number
+          example: 35.1234
+        ug:region:
+          type: object
+        odpt:busroutePattern:
+          type: array
+          items:
+            type: string
+        odpt:operator:
+          type: array
+          items:
+            type: string
+        odpt:busstopPoleNumber:
+          type: string
+        odpt:busstopPoleTimetable:
+          type: array
+          items:
+            type: string
+    odpt_BusstopPoleTimetable:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+        - dc:date
+        - odpt:busstopPole
+        - odpt:busDirection
+        - odpt:busroute
+        - odpt:operator
+        - odpt:calendar
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:BusstopPoleTimetable"
+        owl:sameAs:
+          type: string
+        dc:date:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dct:issued:
+          type: string
+          example: "2017-01-13"
+        dct:valid:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dc:title:
+          type: string
+        odpt:busstopPole:
+          type: string
+        odpt:busDirection:
+          type: array
+          items:
+            type: string
+        odpt:busroute:
+          type: array
+          items:
+            type: string
+        odpt:operator:
+          type: string
+        odpt:calendar:
+          type: string
+        odpt:busstopTimetableObject:
+          type: array
+          items:
+            $ref: '#/components/schemas/odpt_busstopTimetableObject'
+    odpt_busstopTimetableObject:
+      type: object
+      required:
+        - odpt:departureTime
+      properties:
+        odpt:arrivalTime:
+          type: string
+          example: "10:00"
+        odpt:departureTime:
+          type: string
+          example: "10:00"
+        odpt:destinationBusstopPole:
+          type: string
+        odpt:destinationSign:
+          type: string
+        odpt:busroutePattern:
+          type: string
+        odpt:isNonStepBus:
+          type: boolean
+          example: true
+        odpt:isMidnight:
+          type: boolean
+          example: true
+        odpt:canGetOn:
+          type: boolean
+          example: true
+        odpt:canGetOff:
+          type: boolean
+          example: true
+        odpt:note:
+          type: string
+    odpt_Airport:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:Airport"
+        dc:date:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        owl:sameAs:
+          type: string
+          example: "odpt.Airport:HND"
+        dc:title:
+          type: string
+          example: "東京(羽田)"
+        odpt:airportTitle:
+          type: object
+          example: { "ja" : "東京(羽田)", "en" : "Tokyo (Haneda)" }
+        odpt:airportTerminal:
+          type: array
+          items:
+            type: string
+          example: [ "odpt.AirportTerminal:HND.DomesticTerminal1" ]
+        geo:long:
+          type: number
+          example: 139.1234
+        geo:lat:
+         type: number
+         example: 35.1234
+        ug:region:
+          type: object
+    odpt_AirportTerminal:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+        - odpt:airport
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:AirportTerminal"
+        dc:date:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        owl:sameAs:
+          type: string
+          example: "odpt.AirportTerminal:HND.DomesticTerminal1"
+        dc:title:
+          type: string
+          example: "国内線第１ターミナル"
+        odpt:airportTerminalTitle:
+          type: object
+          example: { "ja" : "国内線第１ターミナル", "en" : "Domestic Terminal 1" }
+        odpt:airport:
+          type: string
+          example: "odpt.Airport:HND"
+        geo:long:
+          type: number
+          example: 139.1234
+        geo:lat:
+          type: number
+          example: 35.1234
+        ug:region:
+          type: object
+    odpt_FlightInformationArrival:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - dc:date
+        - owl:sameAs
+        - odpt:operator
+        - odpt:flightNumber
+        - odpt:arrivalAirport
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:uuid:ff91feee-2d2c-4365-902e-26375fdf9d8b"
+        '@type':
+          type: string
+          example: "odpt:FlightInformationArrival"
+        dc:date:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        dct:valid:
+          type: string
+          example: "2017-01-13T15:10:00+09:00"
+        owl:sameAs:
+          type: string
+          example: "odpt.FlightInformationArrival:HND-TIAT.HND.JL172"
+        odpt:operator:
+          type: string
+          example: "odpt.Operator:HND-TIAT"
+        odpt:airline:
+          type: string
+          example: "odpt.Operator:ANA"
+        odpt:flightNumber:
+          type: array
+          items:
+            type: string
+          example: [ "NH105", "UA7983" ]
+        odpt:flightStatus:
+          type: string
+          example: "odpt.FlightStatus:Arrived"
+        odpt:flightInformationSummary:
+          type: object
+          example: { "ja" : "引き返し", "en" : "Turn back" }
+        odpt:flightInformationText:
+          type: object
+          example: { "ja" : "急病人救護のため引き返します", "en" : "Turn back for medical care" }
+        odpt:scheduledArrivalTime:
+          type: string
+          example: "06:05"
+        odpt:estimatedArrivalTime:
+          type: string
+          example: "06:04"
+        odpt:actualArrivalTime:
+          type: string
+          example: "06:06"
+        odpt:arrivalAirport:
+          type: string
+          example: "odpt.Airport:NRT"
+        odpt:arrivalAirportTerminal:
+          type: string
+          example: "odpt.AirportTerminal:NRT.Terminal2"
+        odpt:arrivalGate:
+          type: string
+          description: 到着空港のゲート番号
+          example: "12A"
+        odpt:baggageClaim:
+          type: string
+          description: 到着空港の預け手荷物受取所
+          example: "12A"
+        odpt:originAirport:
+          type: string
+          example: "odpt.Airport:HKG"
+        odpt:viaAirport:
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Airport:NRT" ]
+        odpt:aircraftType:
+          type: string
+          example: "788"
+    odpt_FlightInformationDeparture:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - dc:date
+        - owl:sameAs
+        - odpt:operator
+        - odpt:flightNumber
+        - odpt:departureAirport
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:uuid:ff91feee-2d2c-4365-902e-26375fdf9d8b"
+        '@type':
+          type: string
+          example: "odpt:FlightInformationDeparture"
+        dc:date:
+          type: string
+          example: "2017-12-07T13:10:00+09:00"
+        dct:valid:
+          type: string
+          example: "2017-12-07T13:15:00+09:00"
+        owl:sameAs:
+          type: string
+          example: "odpt.FlightInformationDeparture:HND-TIAT.HND.JL172"
+        odpt:operator:
+          type: string
+          example: "odpt.Operator:HND-TIAT"
+        odpt:airline:
+          type: string
+          example: "odpt.Operator:ANA"
+        odpt:flightNumber:
+          type: array
+          items:
+            type: string
+          example: [ "NH105", "UA7983" ]
+        odpt:flightStatus:
+          type: string
+          example: "odpt.FlightStatus:Takeoff"
+        odpt:flightInformationSummary:
+          type: object
+          example: { "ja" : "急病人救護のため引き返します", "en" : "Turn back for medical care" }
+        odpt:scheduledDepartureTime:
+          type: string
+          example: "06:05"
+        odpt:actualDepartureTime:
+          type: string
+          example: "06:06"
+        odpt:departureAirport:
+          type: string
+          example: "odpt.Airport:NRT"
+        odpt:departureAirportTerminal:
+          type: string
+          example: "odpt.AirportTerminal:NRT.Terminal2"
+        odpt:departureGate:
+          type: string
+          example: "12A"
+        odpt:checkInCounter:
+          type: array
+          items:
+            type: string
+          example: [ "A", "B" ]
+        odpt:destinationAirport:
+          type: string
+          example: "odpt.Airport:HKG"
+        odpt:viaAirport:
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Airport:NRT" ]
+        odpt:aircraftType:
+          type: string
+          example: "788"
+    odpt_FlightSchedule:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+        - odpt:operator
+        - odpt:calendar
+        - odpt:originAirport
+        - odpt:destinationAirport
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          description: 固有識別子(ucode)
+          example: "urn:ucode:_00001C000000000000010000030FD7E5"
+        '@type':
+          type: string
+          example: "odpt:FlightSchedule"
+        dc:date:
+          type: string
+          example: "2017-12-07T13:10:00+09:00"
+        owl:sameAs:
+          type: string
+          example: "odpt.FlightSchedule:ANA.HND.ITM.Wednesday"
+        odpt:operator:
+          type: string
+          example: "odpt.Operator:ANA"
+        odpt:calendar:
+          type: string
+          example: "odpt.Calendar:Wednesday"
+        odpt:originAirport:
+          type: string
+          example: "odpt.Airport:HND"
+        odpt:destinationAirport:
+          type: string
+          example: "odpt.Airport:ITM"
+        odpt:flightScheduleObject:
+          type: array
+          items:
+            $ref: '#/components/schemas/odpt_FlightScheduleObject'
+    odpt_FlightScheduleObject:
+      type: object
+      required:
+        - odpt:airline
+        - odpt:flightNumber
+        - odpt:originTime
+        - odpt:destinationTime
+      properties:
+        odpt:airline:
+          type: string
+          example: "odpt.Operator:ANA"
+        odpt:flightNumber:
+          type: array
+          items:
+            type: string
+          example: [ "NH105", "UA7983" ]
+        odpt:originTime:
+          type: string
+          example: "10:00"
+        odpt:originDayDirrefence:
+          type: integer
+          example: 0
+        odpt:destinationTime:
+          type: string
+          example: "12:15"
+        odpt:destinationDayDirrefence:
+          type: integer
+          example: 1
+        odpt:viaAirport:
+          type: array
+          items:
+            type: string
+          example: [ "odpt.Airport:NRT" ]
+        odpt:aircraftType:
+          type: string
+          example: "788"
+        odpt:isValidFrom:
+          type: string
+          example: "2017-10-31T23:06:38+09:00"
+        odpt:isValidTo:
+          type: string
+          example: "2017-10-31T23:06:38+09:00"
+        odpt:note:
+          type: object
+          example: { "ja" : "日本語での注釈情報", "en" : "Note in English" }
+    odpt_FlightStatus:
+      type: object
+      required:
+        - '@context'
+        - '@id'
+        - '@type'
+        - owl:sameAs
+      properties:
+        '@context':
+          type: string
+          example: "http://vocab.odpt.org/context_odpt.jsonld"
+        '@id':
+          type: string
+          example: "urn:uuid:ff91feee-2d2c-4365-902e-26375fdf9d8b"
+        '@type':
+          type: string
+          example: "odpt:FlightStatus"
+        dc:date:
+          type: string
+          example: "2017-12-07T15:10:00+09:00"
+        owl:sameAs:
+          type: string
+          example: "odpt.FlightStatus:CheckIn"
+        dc:title:
+          type: string
+          example: "搭乗手続中"
+        odpt:flightStatusTitle:
+          type: object
+          example: { "ja" : "搭乗手続中", "en" : "Check in" }
+    park_info:
+      type: object
+      required:
+       - area_id
+       - park_id
+       - park_name_en
+       - end_time
+       - basho
+       - lat
+       - lon
+       - cycle_num
+       - cycle_num_lv
+       - setting_num
+       - setting_num_lv
+       - limit
+       - image_url
+       - updated_at
+      properties:
+        ent_id:
+          description: ポート事業者ID
+          type: string
+          example: TYO
+        area_id:
+          description: エリア識別ID
+          type: string
+          example: '1'
+        park_id:
+          description: ポートID
+          type: string
+          example: '00010035'
+        park_name_jp:
+          description: ポート名(日本語)
+          type: string
+          example: A3-07.淡路公園
+        park_name_en:
+          description: ポート名(英語)
+          type: string
+          example: A3-07.Awaji Park
+        start_time:
+          description: 営業開始時間
+          type: string
+          pattern: '^\d{2}:\d{2}$'
+          example: 00:00
+        end_time:
+          description: 営業終了時間
+          type: string
+          pattern: '^\d{2}:\d{2}$'
+          example: 00:00
+        basho:
+          description: 場所
+          type: string
+          example: 秋葉原・神田/Akihabara・Kanda
+        lat:
+          description: 緯度
+          type: number
+          format: double
+          example: 35.696942
+        lon:
+          description: 経度
+          type: number
+          format: double
+          example: 139.767302
+        cycle_num:
+          description: 利用可能台数
+          type: integer
+          example: 14
+        cycle_num_lv:
+          description: >
+            利用可能台数レベル
+            「利用可能台数」÷「設置許容数」:
+              - 0.75-0.99: 4
+              - 0.50-0.75: 3
+              - 0.25-0.50: 2
+              - 0.01-0.25: 1
+          type: integer
+          example: 4
+        setting_num:
+          description: 返却可能台数
+          type: integer
+          example: 0
+        setting_num_lv:
+          description: >
+            返却可能台数レベル
+            「返却可能台数」÷「設置許容数」:
+              - 0.75-0.99: 4
+              - 0.50-0.75: 3
+              - 0.25-0.50: 2
+              - 0.01-0.25: 1
+          type: integer
+          example: 0
+        limit:
+          description: >
+            駐輪台数制限:
+              - 0: 制限なし
+              - 1: 制限有り
+          type: integer
+          example: 0
+        image_url:
+          description: 画像URL
+          type: string
+          example: https://tcc.docomo-cycle.jp/cycle/park_img/00010035.jpg
+        updated_at:
+          description: データ更新時刻(UNIX time)
+          type: integer
+          example: 1585358925
+
+security:
+  - aclConsumerKey: []
